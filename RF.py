@@ -17,10 +17,9 @@ from sklearn.cross_validation import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.decomposition import PCA
+import cPickle
 
-df_final = pd.read_pickle('first_df_final.pkl')
-
-df_final_RF = df_final.drop(['Split_Text','Stemmed_Text','Lemma_Text', 'Stopless_Text'], axis=1, inplace=True)
+df_final= pd.read_pickle('big_df_final_RF.pkl')
 
 y_final = df_final['Author']
 
@@ -30,9 +29,18 @@ collist.remove('Book_Title')
 
 X_final = df_final[collist]
 
-X_train_fin, X_test_fin, y_train_fin, y_test_fin = train_test_split(X_final, y_final)
+#X_train_fin, X_test_fin, y_train_fin, y_test_fin = train_test_split(X_final, y_final)
 
 rf = RandomForestClassifier(random_state=42, min_samples_split=3)
-rf.fit(X_train_fin, y_train_fin)
+rf.fit(X_final, y_final)
 
-print rf.score(X_test_fin, y_test_fin)
+with open('RFmodel.cpickle', 'wb') as f:
+    cPickle.dump(rf, f)
+
+# with open('RFmodel.cpickle', 'rb') as f:
+#     rf = cPickle.load(f)
+#
+#
+# preds = rf.predict(new_X)
+#
+# read_dictionary = np.load('author_id.npy').item()

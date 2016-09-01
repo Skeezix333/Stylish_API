@@ -4,7 +4,9 @@ import numpy as np
 from collections import Counter,defaultdict
 import sklearn
 
-PATH = 'sample_proj'
+print 'starting'
+
+PATH = 'final_proj'
 
 def listdir_nohidden(path):
     not_hidden = []
@@ -19,6 +21,8 @@ for i in range(len(authorlist)):
     author_id_list.append(i)
 author_id_dict=dict(zip(authorlist, author_id_list))
 author_id_dict
+
+np.save('author_id.npy', author_id_dict)
 
 authordict ={}
 
@@ -78,5 +82,5 @@ for txt in df.Split_Text:
 
 df_new.Split_Text = string_list
 
-df.to_pickle('first_df.pkl')
-df_new.to_pickle('first_df_new.pkl')
+df.to_pickle('big_df.pkl')
+df_new.to_pickle('big_df_new.pkl')

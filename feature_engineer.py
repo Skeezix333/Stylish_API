@@ -14,8 +14,8 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer, SnowballStemmer
 import string
 from nltk.corpus import stopwords
 
-df = pd.read_pickle('first_df.pkl')
-df_new = pd.read_pickle('first_df_new.pkl')
+df = pd.read_pickle('big_df.pkl')
+df_new = pd.read_pickle('big_df_new.pkl')
 
 avg_sent_len_list = []
 for x in df_new.Split_Text:
@@ -23,6 +23,8 @@ for x in df_new.Split_Text:
     avg_sent_len_list.append(length)
 
 df_new['Avg_Sen'] = avg_sent_len_list
+
+print '1'
 
 comma_list = []
 semic_list = []
@@ -90,6 +92,8 @@ df_new['This'] = this_list
 df_new['Very'] = very_list
 df_new['However'] = however_list
 
+print '2'
+
 def clean_text(text):
     no_cap =' '.join(word for word in text.split() if word.islower())
     exclude = set(string.punctuation)
@@ -119,6 +123,8 @@ for x in df_newer.Split_Text:
 
 df_newer['TTR']=ttr_list
 
+print '3'
+
 stemmer = SnowballStemmer('english')
 stemmed_string_list = []
 for x in df_newer.Split_Text:
@@ -129,6 +135,8 @@ for x in df_newer.Split_Text:
 
 df_newer['Stemmed_Text'] = stemmed_string_list
 
+print '4'
+
 stem_dttr_list = []
 for x in df_newer.Stemmed_Text:
     temp_stem_dttr = float(len(set(x.split(' '))))/(len(x.split(' ')))
@@ -136,28 +144,36 @@ for x in df_newer.Stemmed_Text:
 
 df_newer['Stem_TTR'] = stem_dttr_list
 
-lemma = WordNetLemmatizer()
-lemma_string_list = []
-for x in df_newer.Split_Text:
-    temp_lemma_list = []
-    for word in x.split(' '):
-        temp_lemma_list.append(lemma.lemmatize(word))
-    lemma_string_list.append(' '.join(temp_lemma_list))
+print '5'
 
-df_newer['Lemma_Text'] = lemma_string_list
+# lemma = WordNetLemmatizer()
+# lemma_string_list = []
+# for x in df_newer.Split_Text:
+#     temp_lemma_list = []
+#     for word in x.split(' '):
+#         temp_lemma_list.append(lemma.lemmatize(word))
+#     lemma_string_list.append(' '.join(temp_lemma_list))
+#
+# df_newer['Lemma_Text'] = lemma_string_list
+#
+# print '6'
+#
+# lemma_dttr_list = []
+# for x in df_newer.Lemma_Text:
+#     temp_lemma_dttr = float(len(set(x.split(' '))))/(len(x.split(' ')))
+#     lemma_dttr_list.append(temp_lemma_dttr)
+#
+# df_newer['Lemma_TTR'] = lemma_dttr_list
 
-lemma_dttr_list = []
-for x in df_newer.Lemma_Text:
-    temp_lemma_dttr = float(len(set(x.split(' '))))/(len(x.split(' ')))
-    lemma_dttr_list.append(temp_lemma_dttr)
-
-df_newer['Lemma_TTR'] = lemma_dttr_list
+print '7'
 
 avg_word_len_list = []
 for x in df_newer.Split_Text:
     avg_word_len_list.append(len(''.join(x.split(' ')))/float((len(x.split()))))
 
 df_newer['Avg_Word'] = avg_word_len_list
+
+print '8'
 
 avg_word_stop_list = []
 stop = stopwords.words('english')
@@ -167,12 +183,16 @@ for x in df_newer.Split_Text:
 
 df_newer['Avg_NoStop_Word'] = avg_word_stop_list
 
-word_stop_list = []
-stop = stopwords.words('english')
-for x in df_newer.Split_Text:
-    no_stop_list = [i for i in x.split(' ') if i not in stop]
-    word_stop_list.append(' '.join(no_stop_list))
+print '9'
 
-df_newer['Stopless_Text'] = word_stop_list
+# word_stop_list = []
+# stop = stopwords.words('english')
+# for x in df_newer.Split_Text:
+#     no_stop_list = [i for i in x.split(' ') if i not in stop]
+#     word_stop_list.append(' '.join(no_stop_list))
+#
+# df_newer['Stopless_Text'] = word_stop_list
 
-df_newer.to_pickle('first_df_newer.pkl')
+print '10'
+
+df_newer.to_pickle('big_df_newer.pkl')
